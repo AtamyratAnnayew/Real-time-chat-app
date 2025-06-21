@@ -1,9 +1,10 @@
-import React, { useEffect, useState, ChangeEvent, FormEvent } from "react";
+import React, { useEffect, useState } from "react";
+import type { ChangeEvent, FormEvent } from "react";
+
 import Message from "./Message";
 import firebase from "firebase/compat/app";
 import "firebase/compat/firestore";
-import {  useRef } from 'react';
-
+import { useRef } from "react";
 
 type Props = {
   user: firebase.User | null;
@@ -16,8 +17,8 @@ type ChatMessage = {
   createdAt?: {
     seconds: number;
   };
-  uid: string;           // ✅ sender's UID
-  currentUid?: string;  
+  uid: string; // ✅ sender's UID
+  currentUid?: string;
   displayName: string;
   photoUrl?: string;
 };
@@ -67,10 +68,9 @@ const Channel: React.FC<Props> = ({ user, db }) => {
   };
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-useEffect(() => {
-  messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-}, [messages]);
-
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
   return (
     <div className="flex flex-col h-[70vh]">
@@ -78,17 +78,18 @@ useEffect(() => {
         {messages.map((msg) => (
           <li key={msg.id}>
             <Message
-  createdAt={msg.createdAt}
-  text={msg.text}
-  displayName={msg.displayName}
-  photoUrl={msg.photoUrl}
-  uid={msg.uid} // ✅ Add this
-  currentUid={user?.uid} // ✅ Also pass the current user’s UID
-/>
+              createdAt={msg.createdAt}
+              text={msg.text}
+              displayName={msg.displayName}
+              photoUrl={msg.photoUrl}
+              uid={msg.uid} // ✅ Add this
+              currentUid={user?.uid} // ✅ Also pass the current user’s UID
+            />
           </li>
         ))}
-        <div ref={messagesEndRef} />
       </ul>
+        <div ref={messagesEndRef} />
+      
 
       <form onSubmit={handleOnSubmit} className="flex gap-2">
         <input
